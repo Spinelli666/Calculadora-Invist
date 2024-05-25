@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculadora de Investimento</title>
+</head>
+<body>
+    <h1>Calculadora de Investimento</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="ativos">Número de Ativos:</label>
+        <input type="number" id="ativos" name="ativos" required><br>
+        
+        <label for="T">Número de Períodos:</label>
+        <input type="number" id="T" name="T" required><br>
+        
+        <label for="B_inicial">Orçamento Inicial:</label>
+        <input type="number" id="B_inicial" name="B_inicial" required><br>
+        
+        <label for="lambda_valor">Lambda:</label>
+        <input type="number" id="lambda_valor" name="lambda_valor" step="0.01" required><br>
+        
+        <label for="retorno">Retorno (matriz):</label>
+        <textarea id="retorno" name="retorno" required></textarea><br>
+        
+        <label for="risco">Risco (matriz):</label>
+        <textarea id="risco" name="risco" required></textarea><br>
+        
+        <input type="submit" value="Calcular">
+    </form>
+</body>
+</html>
