@@ -1,14 +1,70 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt">
 <head>
-    <title>Resultados do Investimento</title>
+    <meta charset="UTF-8">
+    <title>Resultado do Investimento</title>
+    <!-- Carregar Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <h1>Resultados do Investimento</h1>
-    <h2>Estratégia de Investimento (fração de orçamento):</h2>
-    <pre>{{ x }}</pre>
-    
-    <h2>Evolução do Orçamento:</h2>
-    <pre>{{ B }}</pre>
+    <h1>Resultado do Investimento</h1>
+
+    <!-- Canvas onde o gráfico será renderizado -->
+    <div>
+        <canvas id="investmentChart" width="800" height="400"></canvas>
+    </div>
+
+    <!-- Script para gerar o gráfico -->
+    <script>
+        var ctx = document.getElementById('investmentChart').getContext('2d');
+        var investmentChart = new Chart(ctx, {
+            type: 'line', // Tipo do gráfico
+            data: {
+                labels: Array.from({length: {{ B|length }}}, (_, i) => i + 1), // Gera rótulos de 1 até o total de períodos
+                datasets: [{
+                    label: 'Patrimônio ao longo do tempo',
+                    data: {{ B|safe }}, // Dados passados do Django
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Período', // Título do eixo X
+                            color: '#111', // Cor do texto
+                            font: {
+                                size: 16 // Tamanho da fonte
+                            }
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Patrimônio', // Título do eixo Y
+                            color: '#111', // Cor do texto
+                            font: {
+                                size: 16 // Tamanho da fonte
+                            }
+                        }
+                    }
+                },
+                legend: {
+                    display: true,
+                    position: 'top', // Posição da legenda
+                    labels: {
+                        fontColor: 'black', // Cor da fonte da legenda
+                        fontSize: 16, // Tamanho da fonte da legenda
+                        boxWidth: 20, // Tamanho do quadrado de cor ao lado do texto
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>

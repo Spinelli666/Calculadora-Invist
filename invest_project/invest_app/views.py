@@ -17,10 +17,20 @@ def investimento_view(request):
         x, B = investimento_dinamico(ativos, retorno, risco, B_inicial, T, lambda_valor)
 
         # Preparação do contexto para renderizar o template com os resultados
+        B = B.tolist()
+
+        final = [["Periodo","Patrimonio"]]
+
+        for periodo, patrimonio in enumerate(B):
+            final.append([(periodo+1),patrimonio])
+
+        print(final)
+
         context = {
             'x': x,
             'B': B
         }
+
         return render(request, 'result.html', context)
 
     return render(request, 'investment_form.html')
